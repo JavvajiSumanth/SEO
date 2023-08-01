@@ -34,54 +34,60 @@ const Home = ({
   testimonials,
   faqSection,
   faqdata,
+  loading,
 }) => {
-  return (
-    <>
-      <Head>
-        <title>{metaTags.metaTitle}</title>
-        <meta name="description" content={metaTags.metaDescription} />
-        <link rel="icon" href={metaTags.metaIcon || "/favicon.ico"} />
-      </Head>
+  if (!!loading)
+    return (
+      <>
+        <Head>
+          <title>{metaTags.metaTitle}</title>
+          <meta name="description" content={metaTags.metaDescription} />
+          <link rel="icon" href={metaTags.metaIcon || "/favicon.ico"} />
+        </Head>
+        <Navbar navData={navData} />
+        <Hero heroData={heroData} />
 
-      <Navbar navData={navData} />
-      <Hero heroData={heroData} />
+        <SectionTitle
+          pretitle={benifitSection.pretitle}
+          title={benifitSection.title}
+        >
+          {benifitSection.body}
+        </SectionTitle>
+        <Benefits data={benefitOne} one />
+        <Benefits data={benefitTwo} />
 
-      <SectionTitle
-        pretitle={benifitSection.pretitle}
-        title={benifitSection.title}
-      >
-        {benifitSection.body}
-      </SectionTitle>
-      <Benefits data={benefitOne} one />
-      <Benefits data={benefitTwo} />
+        <SectionTitle
+          pretitle={videoSection.pretitle}
+          title={videoSection.title}
+        >
+          {videoSection.body}
+        </SectionTitle>
 
-      <SectionTitle pretitle={videoSection.pretitle} title={videoSection.title}>
-        {videoSection.body}
-      </SectionTitle>
+        <Video videoId={videoId} />
+        <SectionTitle
+          pretitle={testimonialsSection.pretitle}
+          title={testimonialsSection.title}
+        >
+          {testimonialsSection.body}
+        </SectionTitle>
 
-      <Video videoId={videoId} />
-      <SectionTitle
-        pretitle={testimonialsSection.pretitle}
-        title={testimonialsSection.title}
-      >
-        {testimonialsSection.body}
-      </SectionTitle>
+        <Testimonials testimonials={testimonials} />
+        <SectionTitle pretitle={faqSection.pretitle} title={faqSection.title}>
+          {faqSection.body}
+        </SectionTitle>
 
-      <Testimonials testimonials={testimonials} />
-      <SectionTitle pretitle={faqSection.pretitle} title={faqSection.title}>
-        {faqSection.body}
-      </SectionTitle>
+        <Faq faqdata={faqdata} />
+        <Footer />
+        {/* <PopupWidget /> */}
+      </>
+    );
 
-      <Faq faqdata={faqdata} />
-      <Footer />
-      {/* <PopupWidget /> */}
-    </>
-  );
+  return <h1>Loading...</h1>;
 };
 
 export default Home;
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const navData = {
     // menus: ["Product", "Features", "Pricing", "Company", "Blog"],
     menus: [],
@@ -231,15 +237,13 @@ export async function getStaticProps() {
         ...docSnap.data(),
         testimonials: fetchedData,
         faqdata: fetchedData2,
+        loading: true,
       },
     };
   } catch (error) {
     console.log(error);
     return {
       props: {
-        metaDescription: "Description",
-        metaTitle: "Title",
-        metaIcon: "",
         navData,
         videoSection,
         benifitSection,
@@ -251,6 +255,7 @@ export async function getStaticProps() {
         testimonials,
         faqSection,
         faqdata,
+        loading: true,
       },
     };
   }
