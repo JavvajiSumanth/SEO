@@ -20,6 +20,15 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
+import {
+  Fade,
+  Reveal,
+  JackInTheBox,
+  AttentionSeeker,
+  Roll,
+  Slide,
+  Zoom,
+} from "react-awesome-reveal";
 
 const Home = ({
   metaTags,
@@ -46,37 +55,50 @@ const Home = ({
         </Head>
         <Navbar navData={navData} />
         <Hero heroData={heroData} />
+        <AttentionSeeker delay={500}>
+          <SectionTitle
+            pretitle={benifitSection.pretitle}
+            title={benifitSection.title}
+          >
+            {benifitSection.body}
+          </SectionTitle>
+        </AttentionSeeker>
+        <Zoom direction="left">
+          <Benefits data={benefitOne} one />
+        </Zoom>
+        <Zoom direction="right">
+          <Benefits data={benefitTwo} />
+        </Zoom>
+        <AttentionSeeker>
+          <SectionTitle
+            pretitle={videoSection.pretitle}
+            title={videoSection.title}
+          >
+            {videoSection.body}
+          </SectionTitle>
+        </AttentionSeeker>
 
-        <SectionTitle
-          pretitle={benifitSection.pretitle}
-          title={benifitSection.title}
-        >
-          {benifitSection.body}
-        </SectionTitle>
-        <Benefits data={benefitOne} one />
-        <Benefits data={benefitTwo} />
-
-        <SectionTitle
-          pretitle={videoSection.pretitle}
-          title={videoSection.title}
-        >
-          {videoSection.body}
-        </SectionTitle>
-
-        <Video videoId={videoId} />
-        <SectionTitle
-          pretitle={testimonialsSection.pretitle}
-          title={testimonialsSection.title}
-        >
-          {testimonialsSection.body}
-        </SectionTitle>
+        <JackInTheBox>
+          <Video videoId={videoId} />
+        </JackInTheBox>
+        <AttentionSeeker>
+          <SectionTitle
+            pretitle={testimonialsSection.pretitle}
+            title={testimonialsSection.title}
+          >
+            {testimonialsSection.body}
+          </SectionTitle>
+        </AttentionSeeker>
 
         <Testimonials testimonials={testimonials} />
-        <SectionTitle pretitle={faqSection.pretitle} title={faqSection.title}>
-          {faqSection.body}
-        </SectionTitle>
-
-        <Faq faqdata={faqdata} />
+        <AttentionSeeker>
+          <SectionTitle pretitle={faqSection.pretitle} title={faqSection.title}>
+            {faqSection.body}
+          </SectionTitle>
+        </AttentionSeeker>
+        <Slide>
+          <Faq faqdata={faqdata} />
+        </Slide>
         <Footer />
         {/* <PopupWidget /> */}
       </>
